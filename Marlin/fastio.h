@@ -1,11 +1,17 @@
 /*
+<<<<<<< HEAD
   This code contibuted by Triffid_Hunter and modified by Kliment
   why double up on these macros? see http://gcc.gnu.org/onlinedocs/cpp/Stringification.html
+=======
+	This code contibuted by Triffid_Hunter and modified by Kliment
+	why double up on these macros? see http://gcc.gnu.org/onlinedocs/cpp/Stringification.html
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 */
 
 #ifndef	_ARDUINO_H
 #define	_ARDUINO_H
 
+<<<<<<< HEAD
 #include <avr/io.h>
 
 /*
@@ -82,6 +88,60 @@
 
 /// check if pin is an timer wrapper
 #define GET_TIMER(IO)  _GET_TIMER(IO)
+=======
+#include	<avr/io.h>
+
+/*
+	utility functions
+*/
+
+#ifndef		MASK
+/// MASKING- returns \f$2^PIN\f$
+	#define		MASK(PIN)				(1 << PIN)
+#endif
+
+/*
+	magic I/O routines
+
+	now you can simply SET_OUTPUT(STEP); WRITE(STEP, 1); WRITE(STEP, 0);
+*/
+
+/// Read a pin
+#define		_READ(IO)					((bool)(DIO ## IO ## _RPORT & MASK(DIO ## IO ## _PIN)))
+/// write to a pin
+#define		_WRITE(IO, v)			do { if (v) {DIO ##  IO ## _WPORT |= MASK(DIO ## IO ## _PIN); } else {DIO ##  IO ## _WPORT &= ~MASK(DIO ## IO ## _PIN); }; } while (0)
+/// toggle a pin
+#define		_TOGGLE(IO)				do {DIO ##  IO ## _RPORT = MASK(DIO ## IO ## _PIN); } while (0)
+
+/// set pin as input
+#define		_SET_INPUT(IO)		do {DIO ##  IO ## _DDR &= ~MASK(DIO ## IO ## _PIN); } while (0)
+/// set pin as output
+#define		_SET_OUTPUT(IO)		do {DIO ##  IO ## _DDR |=  MASK(DIO ## IO ## _PIN); } while (0)
+
+/// check if pin is an input
+#define		_GET_INPUT(IO)		((DIO ## IO ## _DDR & MASK(DIO ## IO ## _PIN)) == 0)
+/// check if pin is an output
+#define		_GET_OUTPUT(IO)		((DIO ## IO ## _DDR & MASK(DIO ## IO ## _PIN)) != 0)
+
+//	why double up on these macros? see http://gcc.gnu.org/onlinedocs/cpp/Stringification.html
+
+/// Read a pin wrapper
+#define		READ(IO)					_READ(IO)
+/// Write to a pin wrapper
+#define		WRITE(IO, v)			_WRITE(IO, v)
+/// toggle a pin wrapper
+#define		TOGGLE(IO)				_TOGGLE(IO)
+
+/// set pin as input wrapper
+#define		SET_INPUT(IO)			_SET_INPUT(IO)
+/// set pin as output wrapper
+#define		SET_OUTPUT(IO)		_SET_OUTPUT(IO)
+
+/// check if pin is an input wrapper
+#define		GET_INPUT(IO)			_GET_INPUT(IO)
+/// check if pin is an output wrapper
+#define		GET_OUTPUT(IO)		_GET_OUTPUT(IO)
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 /*
 	ports and functions
@@ -424,7 +484,11 @@ pins
 #define PD7_PWM			NULL
 #endif	/*	_AVR_ATmega{168,328,328P}__ */
 
+<<<<<<< HEAD
 #if defined (__AVR_ATmega644__) || defined (__AVR_ATmega644P__) || defined (__AVR_ATmega644PA__) || defined (__AVR_ATmega1284P__)
+=======
+#if defined (__AVR_ATmega644__) || defined (__AVR_ATmega644P__) || defined (__AVR_ATmega644PA__)
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 // UART
 #define	RXD					DIO8
 #define	TXD					DIO9
@@ -479,13 +543,21 @@ pins
 #define DIO3_RPORT	PINB
 #define DIO3_WPORT	PORTB
 #define DIO3_DDR		DDRB
+<<<<<<< HEAD
 #define DIO3_PWM		OCR0A
+=======
+#define DIO3_PWM		&OCR0A
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 #define DIO4_PIN		PINB4
 #define DIO4_RPORT	PINB
 #define DIO4_WPORT	PORTB
 #define DIO4_DDR		DDRB
+<<<<<<< HEAD
 #define DIO4_PWM		OCR0B
+=======
+#define DIO4_PWM		&OCR0B
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 #define DIO5_PIN		PINB5
 #define DIO5_RPORT	PINB
@@ -533,25 +605,41 @@ pins
 #define DIO12_RPORT	PIND
 #define DIO12_WPORT	PORTD
 #define DIO12_DDR		DDRD
+<<<<<<< HEAD
 #define DIO12_PWM		OCR1B
+=======
+#define DIO12_PWM		NULL
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 #define DIO13_PIN		PIND5
 #define DIO13_RPORT	PIND
 #define DIO13_WPORT	PORTD
 #define DIO13_DDR		DDRD
+<<<<<<< HEAD
 #define DIO13_PWM		OCR1A
+=======
+#define DIO13_PWM		NULL
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 #define DIO14_PIN		PIND6
 #define DIO14_RPORT	PIND
 #define DIO14_WPORT	PORTD
 #define DIO14_DDR		DDRD
+<<<<<<< HEAD
 #define DIO14_PWM		OCR2B
+=======
+#define DIO14_PWM		&OCR2B
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 #define DIO15_PIN		PIND7
 #define DIO15_RPORT	PIND
 #define DIO15_WPORT	PORTD
 #define DIO15_DDR		DDRD
+<<<<<<< HEAD
 #define DIO15_PWM		OCR2A
+=======
+#define DIO15_PWM		&OCR2A
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 #define DIO16_PIN		PINC0
 #define DIO16_RPORT	PINC
@@ -782,14 +870,22 @@ pins
 #define PB3_RPORT		PINB
 #define PB3_WPORT		PORTB
 #define PB3_DDR			DDRB
+<<<<<<< HEAD
 #define PB3_PWM			OCR0A
+=======
+#define PB3_PWM			&OCR0A
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 #undef PB4
 #define PB4_PIN			PINB4
 #define PB4_RPORT		PINB
 #define PB4_WPORT		PORTB
 #define PB4_DDR			DDRB
+<<<<<<< HEAD
 #define PB4_PWM			OCR0B
+=======
+#define PB4_PWM			&OCR0B
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 #undef PB5
 #define PB5_PIN			PINB5
@@ -917,14 +1013,22 @@ pins
 #define PD6_RPORT		PIND
 #define PD6_WPORT		PORTD
 #define PD6_DDR			DDRD
+<<<<<<< HEAD
 #define PD6_PWM			OCR2B
+=======
+#define PD6_PWM			&OCR2B
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 #undef PD7
 #define PD7_PIN			PIND7
 #define PD7_RPORT		PIND
 #define PD7_WPORT		PORTD
 #define PD7_DDR			DDRD
+<<<<<<< HEAD
 #define PD7_PWM			OCR2A
+=======
+#define PD7_PWM			&OCR2A
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 #endif	/*	_AVR_ATmega{644,644P,644PA}__ */
 
 #if defined (__AVR_ATmega1280__) || defined (__AVR_ATmega2560__)
@@ -1928,7 +2032,11 @@ pins
 
 #endif
 
+<<<<<<< HEAD
 #if defined (__AVR_AT90USB1287__) || defined (__AVR_AT90USB1286__)
+=======
+#if defined (__AVR_AT90USB1287__)
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 // SPI
 #define	SCK					DIO9
 #define	MISO				DIO11

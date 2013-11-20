@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Sprinter Arduino Project Makefile
+=======
+# Marlin Arduino Project Makefile
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 # 
 # Makefile Based on:
 # Arduino 0011 Makefile
@@ -23,9 +27,13 @@
 #  3. Set the line containing "MCU" to match your board's processor. 
 #     Older one's are atmega8 based, newer ones like Arduino Mini, Bluetooth
 #     or Diecimila have the atmega168.  If you're using a LilyPad Arduino,
+<<<<<<< HEAD
 #     change F_CPU to 8000000. If you are using Gen7 electronics, you
 #     probably need to use 20000000. Either way, you must regenerate
 #     the speed lookup table with create_speed_lookuptable.py.
+=======
+#     change F_CPU to 8000000.
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 #
 #  4. Type "make" and press enter to compile/verify your program.
 #
@@ -34,6 +42,7 @@
 #
 # $Id$
 
+<<<<<<< HEAD
 #For "old" Arduino Mega
 #MCU = atmega1280
 #For Arduino Mega2560
@@ -80,10 +89,25 @@ VPATH += applet
 VPATH += $(HARDWARE_SRC)
 VPATH += $(ARDUINO)
 VPATH += $(INSTALL_DIR)/libraries/LiquidCrystal
+=======
+TARGET = Marlin
+INSTALL_DIR = ../../Desktop/arduino-0018/
+UPLOAD_RATE = 38400
+AVRDUDE_PROGRAMMER = stk500v1
+PORT = /dev/ttyUSB0
+#MCU = atmega2560
+#For "old" Arduino Mega
+#MCU = atmega1280
+#For Sanguinololu
+MCU = atmega644p 
+F_CPU = 16000000
+
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 ############################################################################
 # Below here nothing should be changed...
 
+<<<<<<< HEAD
 AVR_TOOLS_PATH = 
 SRC =  pins_arduino.c wiring.c \
 	wiring_analog.c wiring_digital.c \
@@ -97,6 +121,19 @@ CXXSRC = WMath.cpp WString.cpp Print.cpp \
 #CXXSRC += ultralcd.cpp
 FORMAT = ihex
 
+=======
+ARDUINO = $(INSTALL_DIR)/hardware/Sanguino/cores/arduino
+AVR_TOOLS_PATH = $(INSTALL_DIR)/hardware/tools/avr/bin
+SRC =  $(ARDUINO)/pins_arduino.c wiring.c wiring_serial.c \
+$(ARDUINO)/wiring_analog.c $(ARDUINO)/wiring_digital.c \
+$(ARDUINO)/wiring_pulse.c \
+$(ARDUINO)/wiring_shift.c $(ARDUINO)/WInterrupts.c
+CXXSRC = $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp \
+$(ARDUINO)/Print.cpp ./SdFile.cpp ./SdVolume.cpp ./Sd2Card.cpp
+FORMAT = ihex
+
+
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 # Name of this Makefile (used for "make depend").
 MAKEFILE = Makefile
 
@@ -111,9 +148,15 @@ OPT = s
 CDEFS = -DF_CPU=$(F_CPU)
 CXXDEFS = -DF_CPU=$(F_CPU)
 
+<<<<<<< HEAD
 # Add all the source directories as include directories too
 CINCS = ${addprefix -I ,${VPATH}}
 CXXINCS = ${addprefix -I ,${VPATH}}
+=======
+# Place -I options here
+CINCS = -I$(ARDUINO)
+CXXINCS = -I$(ARDUINO)
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 # Compiler flag to set the C Standard level.
 # c89   - "ANSI" C
@@ -122,6 +165,7 @@ CXXINCS = ${addprefix -I ,${VPATH}}
 # gnu99 - c99 plus GCC extensions
 #CSTANDARD = -std=gnu99
 CDEBUG = -g$(DEBUG)
+<<<<<<< HEAD
 CWARN = -Wall -Wstrict-prototypes
 CTUNING = -funsigned-char -funsigned-bitfields -fpack-struct \
 	-fshort-enums -w -ffunction-sections -fdata-sections \
@@ -133,6 +177,14 @@ endif
 
 CFLAGS = $(CDEBUG) $(CDEFS) $(CINCS) -O$(OPT) $(CWARN) $(CEXTRA) $(CTUNING)
 CXXFLAGS =         $(CDEFS) $(CINCS) -O$(OPT) -Wall    $(CEXTRA) $(CTUNING)
+=======
+CWARN = -Wall -Wunused-variable
+CTUNING = -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -w -ffunction-sections -fdata-sections -DARDUINO=22
+#CEXTRA = -Wa,-adhlns=$(<:.c=.lst)
+
+CFLAGS = $(CDEBUG) $(CDEFS) $(CINCS) -O$(OPT) $(CWARN) $(CEXTRA) $(CTUNING)
+CXXFLAGS = $(CDEFS) $(CINCS) -O$(OPT) -Wall $(CEXTRA) $(CTUNING)
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 #ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs 
 LDFLAGS = -lm
 
@@ -141,6 +193,7 @@ LDFLAGS = -lm
 AVRDUDE_PORT = $(PORT)
 AVRDUDE_WRITE_FLASH = -U flash:w:applet/$(TARGET).hex:i
 AVRDUDE_FLAGS = -D -C $(INSTALL_DIR)/hardware/tools/avrdude.conf \
+<<<<<<< HEAD
 	-p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER) \
 	-b $(UPLOAD_RATE)
 
@@ -153,13 +206,31 @@ AR  = $(AVR_TOOLS_PATH)avr-ar
 SIZE = $(AVR_TOOLS_PATH)avr-size
 NM = $(AVR_TOOLS_PATH)avr-nm
 AVRDUDE = avrdude
+=======
+-p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER) \
+-b $(UPLOAD_RATE)
+
+# Program settings
+CC = $(AVR_TOOLS_PATH)/avr-gcc
+CXX = $(AVR_TOOLS_PATH)/avr-g++
+OBJCOPY = $(AVR_TOOLS_PATH)/avr-objcopy
+OBJDUMP = $(AVR_TOOLS_PATH)/avr-objdump
+AR  = $(AVR_TOOLS_PATH)/avr-ar
+SIZE = $(AVR_TOOLS_PATH)/avr-size
+NM = $(AVR_TOOLS_PATH)/avr-nm
+AVRDUDE = $(INSTALL_DIR)/hardware/tools/avrdude
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 REMOVE = rm -f
 MV = mv -f
 
 # Define all object files.
+<<<<<<< HEAD
 OBJ = ${patsubst %.c, applet/%.o, ${SRC}}
 OBJ += ${patsubst %.cpp, applet/%.o, ${CXXSRC}}
 OBJ += ${patsubst %.S, applet/%.o, ${ASRC}}
+=======
+OBJ = $(SRC:.c=.o) $(CXXSRC:.cpp=.o) $(ASRC:.S=.o) 
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 # Define all listing files.
 LST = $(ASRC:.S=.lst) $(CXXSRC:.cpp=.lst) $(SRC:.c=.lst)
@@ -167,6 +238,7 @@ LST = $(ASRC:.S=.lst) $(CXXSRC:.cpp=.lst) $(SRC:.c=.lst)
 # Combine all necessary flags and optional flags.
 # Add target processor to flags.
 ALL_CFLAGS = -mmcu=$(MCU) -I. $(CFLAGS)
+<<<<<<< HEAD
 ALL_CXXFLAGS = -mmcu=$(MCU) $(CXXFLAGS)
 ALL_ASFLAGS = -mmcu=$(MCU) -x assembler-with-cpp $(ASFLAGS)
 
@@ -193,6 +265,29 @@ applet/%.cpp: %.pde $(MAKEFILE)
 	@echo '#include "WProgram.h"' > $@
 	@echo '#include "$<"' >>$@
 	@echo '#include "$(ARDUINO)/main.cpp"' >> $@
+=======
+ALL_CXXFLAGS = -mmcu=$(MCU) -I. $(CXXFLAGS)
+ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
+
+
+# Default target.
+all: applet_files_ez build sizeafter
+
+build: elf hex 
+
+applet_files_ez: $(TARGET).pde
+	# Here is the "preprocessing".
+	# It creates a .cpp file based with the same name as the .pde file.
+	# On top of the new .cpp file comes the WProgram.h header.
+	# At the end there is a generic main() function attached.
+	# Then the .cpp file will be compiled. Errors during compile will
+	# refer to this new, automatically generated, file. 
+	# Not the original .pde file you actually edit...
+	test -d applet || mkdir applet
+	echo '#include "WProgram.h"' > applet/$(TARGET).cpp
+	cat $(TARGET).pde >> applet/$(TARGET).cpp
+	cat $(ARDUINO)/main.cpp >> applet/$(TARGET).cpp
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 elf: applet/$(TARGET).elf
 hex: applet/$(TARGET).hex
@@ -201,6 +296,7 @@ lss: applet/$(TARGET).lss
 sym: applet/$(TARGET).sym
 
 # Program the device.  
+<<<<<<< HEAD
 # Do not try to reset an arduino if it's not one
 upload: applet/$(TARGET).hex
 ifeq (${AVRDUDE_PROGRAMMER}, arduino)
@@ -210,6 +306,11 @@ endif
 ifeq (${AVRDUDE_PROGRAMMER}, arduino)
 	stty -hup < $(PORT); true
 endif
+=======
+upload: applet/$(TARGET).hex
+	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH)
+
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 	# Display size of file.
 HEXSIZE = $(SIZE) --target=$(FORMAT) applet/$(TARGET).hex
@@ -217,16 +318,28 @@ ELFSIZE = $(SIZE)  applet/$(TARGET).elf
 sizebefore:
 	@if [ -f applet/$(TARGET).elf ]; then echo; echo $(MSG_SIZE_BEFORE); $(HEXSIZE); echo; fi
 
+<<<<<<< HEAD
 sizeafter: build
 	@if [ -f applet/$(TARGET).elf ]; then echo; echo $(MSG_SIZE_AFTER); $(ELFSIZE); echo; fi
+=======
+sizeafter:
+	@if [ -f applet/$(TARGET).elf ]; then echo; echo $(MSG_SIZE_AFTER); $(HEXSIZE); echo; fi
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 
 # Convert ELF to COFF for use in debugging / simulating in AVR Studio or VMLAB.
 COFFCONVERT=$(OBJCOPY) --debugging \
+<<<<<<< HEAD
 	--change-section-address .data-0x800000 \
 	--change-section-address .bss-0x800000 \
 	--change-section-address .noinit-0x800000 \
 	--change-section-address .eeprom-0x810000 
+=======
+--change-section-address .data-0x800000 \
+--change-section-address .bss-0x800000 \
+--change-section-address .noinit-0x800000 \
+--change-section-address .eeprom-0x810000 
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 
 coff: applet/$(TARGET).elf
@@ -238,6 +351,7 @@ extcoff: $(TARGET).elf
 
 
 .SUFFIXES: .elf .hex .eep .lss .sym
+<<<<<<< HEAD
 .PRECIOUS: .o
 
 .elf.hex:
@@ -247,6 +361,15 @@ extcoff: $(TARGET).elf
 .elf.eep:
 	-$(OBJCOPY) -j .eeprom --set-section-flags=.eeprom="alloc,load" \
 		--change-section-lma .eeprom=0 -O $(FORMAT) $< $@
+=======
+
+.elf.hex:
+	$(OBJCOPY) -O $(FORMAT) -R .eeprom $< $@
+
+.elf.eep:
+	-$(OBJCOPY) -j .eeprom --set-section-flags=.eeprom="alloc,load" \
+	--change-section-lma .eeprom=0 -O $(FORMAT) $< $@
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 # Create extended listing file from ELF output file.
 .elf.lss:
@@ -257,6 +380,7 @@ extcoff: $(TARGET).elf
 	$(NM) -n $< > $@
 
 	# Link: create ELF output file from library.
+<<<<<<< HEAD
 applet/$(TARGET).elf: applet/$(TARGET).cpp applet/core.a Configuration.h
 	@echo "  CXX   $@"
 	@$(CC) $(ALL_CXXFLAGS) -Wl,--gc-sections -o $@ applet/$(TARGET).cpp -L. applet/core.a $(LDFLAGS)
@@ -271,10 +395,39 @@ applet/%.o: %.c Configuration.h Configuration_adv.h $(MAKEFILE)
 applet/%.o: %.cpp Configuration.h Configuration_adv.h $(MAKEFILE)
 	@echo "  CXX   $@"
 	@$(CXX) -MMD -c $(ALL_CXXFLAGS) $< -o $@
+=======
+applet/$(TARGET).elf: $(TARGET).pde applet/core.a 
+	$(CC) $(ALL_CFLAGS) -Wl,--gc-sections -o $@ applet/$(TARGET).cpp -L. applet/core.a $(LDFLAGS)
+
+applet/core.a: $(OBJ)
+	@for i in $(OBJ); do echo $(AR) rcs applet/core.a $$i; $(AR) rcs applet/core.a $$i; done
+
+
+
+# Compile: create object files from C++ source files.
+.cpp.o:
+	$(CXX) -c $(ALL_CXXFLAGS) $< -o $@ 
+
+# Compile: create object files from C source files.
+.c.o:
+	$(CC) -c $(ALL_CFLAGS) $< -o $@ 
+
+
+# Compile: create assembler files from C source files.
+.c.s:
+	$(CC) -S $(ALL_CFLAGS) $< -o $@
+
+
+# Assemble: create object files from assembler source files.
+.S.o:
+	$(CC) -c $(ALL_ASFLAGS) $< -o $@
+
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
 
 
 # Target: clean project.
 clean:
+<<<<<<< HEAD
 	@echo "  RM    applet/*"
 	@$(REMOVE) applet/$(TARGET).hex applet/$(TARGET).eep applet/$(TARGET).cof applet/$(TARGET).elf \
 		applet/$(TARGET).map applet/$(TARGET).sym applet/$(TARGET).lss applet/$(TARGET).cpp applet/core.a \
@@ -287,3 +440,21 @@ clean:
 
 # Automaticaly include the dependency files created by gcc
 -include ${wildcard applet/*.d}
+=======
+	$(REMOVE) applet/$(TARGET).hex applet/$(TARGET).eep applet/$(TARGET).cof applet/$(TARGET).elf \
+	applet/$(TARGET).map applet/$(TARGET).sym applet/$(TARGET).lss applet/core.a \
+	$(OBJ) $(LST) $(SRC:.c=.s) $(SRC:.c=.d) $(CXXSRC:.cpp=.s) $(CXXSRC:.cpp=.d)
+
+depend:
+	if grep '^# DO NOT DELETE' $(MAKEFILE) >/dev/null; \
+	then \
+		sed -e '/^# DO NOT DELETE/,$$d' $(MAKEFILE) > \
+			$(MAKEFILE).$$$$ && \
+		$(MV) $(MAKEFILE).$$$$ $(MAKEFILE); \
+	fi
+	echo '# DO NOT DELETE THIS LINE -- make depend depends on it.' \
+		>> $(MAKEFILE); \
+	$(CC) -M -mmcu=$(MCU) $(CDEFS) $(CINCS) $(SRC) $(ASRC) >> $(MAKEFILE)
+
+.PHONY:	all build elf hex eep lss sym program coff extcoff clean depend applet_files sizebefore sizeafter
+>>>>>>> c9005865ed8ebacfa7bf09303be39288ecd882cd
